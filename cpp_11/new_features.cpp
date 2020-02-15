@@ -13,6 +13,7 @@ or
 
 #include <vector>
 #include <iostream>
+#include "move_semantics.h"
 
 #define USE_CPP_11   //if this macro is open, and compile with C++ 98, compile errors happen
 
@@ -117,5 +118,6 @@ void Run()
 {
     //nullptr_demo();
     //uniform_initialization_demo();
-    for_demo();
+    //for_demo();
+    move_demo();
 }
