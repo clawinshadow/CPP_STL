@@ -69,6 +69,9 @@ reference, which is a type declared with two ampersands: X&&
 
 #include "move_semantics.h"
 
+namespace cpp_11 {
+namespace move_feature {
+
 void move_demo()
 {
     std::string str = "Hello";
@@ -88,4 +91,7 @@ void move_demo()
  
     std::cout << "The contents of the vector are \"" << v[0]
                                          << "\", \"" << v[1] << "\"\n";
+}
+
+}
 }

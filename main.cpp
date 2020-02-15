@@ -4,7 +4,7 @@
 int main()
 {
     // std::cout << "Hello, World." << std::endl;
-    Run();
+    cpp_11::Run();
 
     return 0;
 }

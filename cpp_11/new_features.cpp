@@ -14,10 +14,13 @@ or
 #include <vector>
 #include <iostream>
 #include "move_semantics.h"
+#include "exceptions.h"
 
 #define USE_CPP_11   //if this macro is open, and compile with C++ 98, compile errors happen
 
 using namespace std;
+
+namespace cpp_11 {
 
 // Syntax Cleanup 1: Spaces in Template Expressions
 vector<vector<int> > list_1;      // OK in each C++ version
@@ -114,10 +117,27 @@ void for_demo()
     // for (const auto &elem: collection)..
 }
 
+// New string literals: R"..."
+const std::string str = R"(
+abc
+def
+)";
+
+// New keyword: noexcept
+
+
 void Run()
 {
     //nullptr_demo();
     //uniform_initialization_demo();
     //for_demo();
-    move_demo();
+    //move_feature::move_demo();
+    //std::cout << str << std::endl;
+
+    //exceptions::normal_exception_handling_demo();
+    //exceptions::exception_terminate_demo();
+    //exceptions::stack_unwinding_demo();
+    exceptions::dynamic_exception_specifications_demo();
+}
+
 }
