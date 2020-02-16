@@ -11,7 +11,8 @@ enable_testing()
 add_executable(stl_demo main.cpp 
     cpp_11/new_features.cpp
     cpp_11/move_semantics.cpp
-    cpp_11/exceptions.cpp)
+    cpp_11/exceptions.cpp
+    cpp_11/lambdas.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

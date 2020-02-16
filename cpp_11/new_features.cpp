@@ -11,10 +11,12 @@ or
 
 */
 
+#include <bitset>
 #include <vector>
 #include <iostream>
 #include "move_semantics.h"
 #include "exceptions.h"
+#include "lambdas.h"
 
 #define USE_CPP_11   //if this macro is open, and compile with C++ 98, compile errors happen
 
@@ -123,8 +125,37 @@ abc
 def
 )";
 
-// New keyword: noexcept
+// New keyword: constexpr
+// Since C++11, constexpr can be used to enable that expressions be evaluated at compile time
+// 下面方法前面的constexpr关键字也可以不写，不影响后面的使用
+constexpr int square(int x)
+{
+    return x * x;
+}
 
+// templates new features
+// 1. variadic template: 
+//    Since C++11, templates can have parameters that accept a variable number of template arguments
+void print()
+{
+}
+
+template <typename T, typename... TArgs>
+void print(const T& firstArg, const TArgs&... args)
+{
+    std::cout << firstArg << std::endl; // print first argument
+    print(args...);                     // call print() for remaining arguments
+}
+
+// 2. Alias template
+/*
+template <typename T>
+using Vec = std::vector<T, MyAlloc<T>>; // standard vector using own allocator
+
+    Vec<int> coll;
+is equivalent to
+    std::vector<int,MyAlloc<int>> coll;
+*/
 
 void Run()
 {
@@ -133,11 +164,17 @@ void Run()
     //for_demo();
     //move_feature::move_demo();
     //std::cout << str << std::endl;
+    // float a[square(3)];
+    // a[8] = 8;
 
     //exceptions::normal_exception_handling_demo();
     //exceptions::exception_terminate_demo();
     //exceptions::stack_unwinding_demo();
-    exceptions::dynamic_exception_specifications_demo();
+    //exceptions::dynamic_exception_specifications_demo();
+
+    //print(7.5, "hello", std::bitset<16>(377), 42);
+
+    lambdas::lambdas_demo();
 }
 
 }
