@@ -157,6 +157,57 @@ is equivalent to
     std::vector<int,MyAlloc<int>> coll;
 */
 
+// New keyword: decltype
+// By using the new decltype keyword, you can let the compiler find out the type of an expression
+// 主要是为了替换以前常用的 typeof 这个特性
+// 典型应用场景：
+//      template <typename T1, typename T2>
+//      auto add(T1 x, T2 y) -> decltype(x+y);
+
+// Scoped Enumerations
+// C++11 allows the definition of scoped enumerations — also called strong enumerations, 
+// or enumeration classes — which are a cleaner implementation of enumeration values (enumerators) in C++.
+// For example:
+enum class Salutaion: char {mr, ms, co, none};
+// 主要有两个区别
+// 1. enum后跟了个class
+// 2. 枚举的定义之前有一个char关键字指明了枚举的underlying_type
+// 他们的作用：
+// 1. Implicit conversions to and from int are not possible.
+// 2. Values like mr are not part of the scope where the enumeration is declared. You have to use
+//    Salutation::mr instead
+// 3. You can explicitly define the underlying type (char here) and have a guaranteed size (if you skip
+//    “: char” here, int is the default).
+Salutaion sa = Salutaion::mr;
+// Salutaion sb = ms; //compile error
+// int sc = Salutaion::co; //compile error
+
+// 4. with the type trait std::underlying_type, you can evaluate the underlying type of an
+//    enumeration type
+
+// New fundamental datatypes in C++11
+//      • char16_t and char32_t 
+//      • long long and unsigned long long
+//      • std::nullptr_t 
+
+// Explicit initialization for fundamental types
+/*
+
+int i1;         // undefined value
+int i2 = int(); // initialized with zero
+int i3{};       // initialized with zero (since C++11)
+这个在template中很有用，能赋一个默认初始值0，而不是undefined value
+template <typename T>
+void f()
+{
+    T x = T();
+    ...
+}
+If a template forces the initialization with zero, its value is so-called zero initialized. 
+Otherwise it’s default initialized.
+
+*/
+
 void Run()
 {
     //nullptr_demo();
@@ -174,7 +225,8 @@ void Run()
 
     //print(7.5, "hello", std::bitset<16>(377), 42);
 
-    lambdas::lambdas_demo();
+    //lambdas::lambdas_demo();
+    
 }
 
 }
