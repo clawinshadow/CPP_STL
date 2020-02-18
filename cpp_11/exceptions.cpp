@@ -195,5 +195,75 @@ int dynamic_exception_specifications_demo() {
 //    表示该方法不抛出异常，或者只有constant-expression为true时才抛出异常，
 //    If an exception does exit the outer scope of a function marked noexcept, std::terminate is invoked immediately, 
 //    and there is no guarantee that destructors of any in-scope objects will be invoked
+
+
+/*
+所有的exception都提供 what() 方法，但只有system_error and future_error会提供额外的信息，比如 Error code 和 Error condition, 
+• Error codes are light-weight objects that encapsulate error code values that might be implemen-
+tation-specific. However, some error codes also are standardized.
+• Error conditions are objects that provide portable abstractions of error descriptions.
+一般情况下标准库里面 Error conditions 要用的更多一点
+
+below is an example to retrieve detail exception info:
+
+template <typename T>
+void processCodeException (const T& e)
+{
+    using namespace std;
+    auto c = e.code();
+    cerr << "- category: " << c.category().name() << endl;
+    cerr << "- value: " << c.value() << endl;
+    cerr << "- msg: " << c.message() << endl;
+    cerr << "  - def category: " << c.default_error_condition().category().name() << endl;
+    cerr << "  - def value:" << c.default_error_condition().value() << endl;
+    cerr << "  - def msg: " <<  c.default_error_condition().message() << endl;
+}
+
+Since C++11, the C++ standard library provides the ability to store exceptions into objects of type
+"exception_ptr" to process them later or in other contexts:
+
+#include <exception>
+
+std::exception_ptr eptr; // object to hold exceptions (or nullptr)
+void foo ()
+{
+    try {
+        throw ...;
+    }
+    catch (...) {
+        eptr = std::current_exception();
+    }
+}
+
+void bar ()
+{
+    if (eptr != nullptr) {
+        std::rethrow_exception(eptr);
+    }
+}
+! This feature is especially useful to pass exception between threads !
+
+---------------------
+
+Throwing Standard Exceptions:
+1. All logic error and run-time error standard exception classes that provide the what() interface have only a constructor for
+std::string and (since C++11) for const char*
+
+    explicit logic_error (const string& whatString);
+
+2. Class std::system_error provides the ability to create an exception object by passing an error code, 
+   a what() string, and an optional category
+
+    system_error (error_code ec, const string& what_arg);
+    system_error (int ev, const error_category& ecat, const string& what_arg);
+    
+   To provide an error_code object, make_error_code() convenience functions are provided that
+   take only the error code value.
+
+3. std::ios_base::failure provides constructors taking a what() string and (since C++11) an optional error_code object
+4. std::future_error provides only a constructor taking a single error_code object.
+5. You can’t throw exceptions of the base class exception and any exception class that is provided for
+   language support (bad_cast, bad_typeid, bad_exception)
+*/
 } 
 }
