@@ -14,7 +14,8 @@ add_executable(stl_demo main.cpp
     cpp_11/exceptions.cpp
     cpp_11/lambdas.cpp
     utility/pairs_and_tuples.cc
-    utility/utility_demos.cc)
+    utility/utility_demos.cc
+    utility/smart_pointers.cc)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
