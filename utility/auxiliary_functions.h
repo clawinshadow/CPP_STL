@@ -5,6 +5,8 @@ namespace utility {
 namespace auxiliary_funcs  {
 
 void minmax_demo();
+void swap_demo();
+void ratio_demo();
 
 }
 }

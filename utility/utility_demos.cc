@@ -17,7 +17,9 @@ void Run()
     // smart_pointers::unique_ptr_demo();
     // type_trait::basic_demo();
     // type_trait::wrappers_demo();
-    auxiliary_funcs::minmax_demo();
+    // auxiliary_funcs::minmax_demo();
+    auxiliary_funcs::swap_demo();
+    auxiliary_funcs::ratio_demo();
 }
 
 } //namespace demos
