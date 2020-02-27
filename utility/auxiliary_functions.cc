@@ -311,5 +311,43 @@ void ctime_demo()
     std::cout << asString(tp2) << std::endl;
 }
 
+/*
+ * The following header files compatible with C are often used in C++ programs: <cstddef>,
+   <cstdlib>, and <cstring>. They are the C++ versions of the C header files <stddef.h>,
+   <stdlib.h>, and <string.h>
+   1. <cstddef>
+        NULL : Pointer value for “not defined” or “no value”, 0 in C++
+        nullptr_t : Type of nullptr (since C++11)
+        size_t : Unsigned type for size units, such as number of elements
+        ptrdiff_t : Signed type for differences of pointer
+        max_align_t : Type with maximum alignment in all contexts (since C++11)
+        offsetof(type,mem) : Offset of a member mem in a structure or union type
+   2. <cstdlib>
+        EXIT_SUCCESS : int, Indicates a normal end of the program
+        EXIT_FAILURE: int, Indicates an abnormal end of the program
+        exit (int status) : Exit program (cleans up static objects)
+        quick_exit (int status) : Exit program with cleanup according to at_quick_exit() (since C++11)
+        _Exit (int status) : Exit program with no cleanup (since C++11)
+        abort() : Abort program (might force a crash on some systems)
+        atexit (void (*func)()) : call func on exit
+
+        The exit() and abort() functions are provided to terminate a program in any function without going back to main():
+        • exit() destroys all static objects, flushes all buffers, closes all I/O channels, and terminates
+                the program, including calling atexit() functions. If functions passed to atexit() throw
+                exceptions, terminate() is called.
+        • abort() terminates a program immediately with no cleanup.
+
+        Neither of these functions destroys local objects, because no stack unwinding occurs. To ensure
+        that the destructors of all local objects are called, you should use exceptions or the ordinary return
+        mechanism to return to and exit main().
+    3. <cstring>, low-level functions to manipulate memory
+        memchr (const void* ptr, int c, size_t len) : Finds character c in first len bytes of ptr
+        memcmp (const void* ptr1, const void* ptr2, size_t len)
+        memcpy (void* toPtr, const void* fromPtr, size_t len)
+        memmove (void* toPtr, const void* fromPtr, size_t len)
+        memset (void* ptr, int c, size_t len)
+
+ */
+
 }
 }
