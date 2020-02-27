@@ -1,0 +1,8 @@
+#ifndef STANDARD_TEMPLATE_LIBRARY_BASICS_H
+#define STANDARD_TEMPLATE_LIBRARY_BASICS_H
+
+namespace stl_basics {
+    void Run();
+}
+
+#endif //STANDARD_TEMPLATE_LIBRARY_BASICS_H

@@ -17,7 +17,9 @@ add_executable(stl_demo main.cpp
     utility/utility_demos.cc
     utility/smart_pointers.cc
     utility/type_trait.cpp
-    utility/auxiliary_functions.cc)
+    utility/auxiliary_functions.cc
+    standard_template_library/stl_basics.cc
+    standard_template_library/containers.cc)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
