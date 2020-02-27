@@ -18,8 +18,12 @@ void Run()
     // type_trait::basic_demo();
     // type_trait::wrappers_demo();
     // auxiliary_funcs::minmax_demo();
-    auxiliary_funcs::swap_demo();
-    auxiliary_funcs::ratio_demo();
+//    auxiliary_funcs::swap_demo();
+//    auxiliary_funcs::ratio_demo();
+    // auxiliary_funcs::durations_demo();
+    auxiliary_funcs::clock_demo();
+    auxiliary_funcs::timepoint_demo();
+    auxiliary_funcs::ctime_demo();
 }
 
 } //namespace demos

@@ -7,6 +7,10 @@ namespace auxiliary_funcs  {
 void minmax_demo();
 void swap_demo();
 void ratio_demo();
+void durations_demo();
+void clock_demo();
+void timepoint_demo();
+void ctime_demo();
 
 }
 }

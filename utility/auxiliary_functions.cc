@@ -4,6 +4,9 @@
 #include <iostream>
 #include <algorithm>
 #include <ratio>
+#include <ctime>
+#include <chrono>
+#include <type_traits>
 
 namespace utility {
 namespace auxiliary_funcs {
@@ -96,7 +99,8 @@ namespace std {
            static constexpr intmax_t den;
 }; }
 
-num 表示 分子 numerator， den 表示 分母 denominator
+num 表示 分子 numerator, den 表示 分母 denominator
+这个类型主要在clocks timers里面用得多
  */
 void ratio_demo()
 {
@@ -118,6 +122,193 @@ void ratio_demo()
     std::cout << SUM_TYPE::num << "/" << SUM_TYPE::den << std::endl;
 
     std::cout << std::boolalpha << std::ratio_equal<FiveThirds, AlsoFiveThirds>::value << std::endl;
+}
+
+/*
+ * clocks and timers: 每种语言的时间系统都是个挺精妙的系统, 一般都由以下3个基本概念组成
+ * 1. duration: 表示一段持续的时间, 由两个元素组成, 一是 tick, 这个tick表示一个基本单位, 可以是一秒、一分等,
+ *              二是 tick前面的倍数, 比如 3个 1秒，那这个duration就是三秒..
+ * 2. timepoint: 表示一个时间点，它也是由两个元素组成的，即一个duration加上一个时间的零点时刻(epoch)，比如
+ *               1971.1.1零点，那么就是"1970.1.1 之后的一年"，UNIX和POSIX系统的epoch都是起始自1970.1.1
+ * 3. clock: defines the epoch of a timepoint, provides a convenient function of now()
+ *
+ */
+void durations_demo()
+{
+    //constructor: A duration is a combination of a value representing the number of ticks
+    //             and a fraction representing the unit in seconds
+    //下面初始化的例子中，第一个模板参数表示the type of the number of ticks,
+    //第二个模板参数表示unit的类型，是以秒为基本单位的，默认为一秒
+    std::chrono::duration<int> seconds(20);  // 20 的类型是int，第二个参数使用默认的一秒，那就是20秒
+    std::chrono::duration<double, std::ratio<60>> halfMinute(0.5); //0.5是double类型，第二个参数表示一个unit是60秒
+    std::chrono::duration<long, std::ratio<1, 1000>> millisecond(1); // 1毫秒
+
+    //像上面那么定义很麻烦，于是标准库提供几个常用的typedef
+    //std::chrono::nanoseconds	duration</*signed integer type of at least 64 bits*/, std::nano>
+    //std::chrono::microseconds	duration</*signed integer type of at least 55 bits*/, std::micro>
+    //std::chrono::milliseconds	duration</*signed integer type of at least 45 bits*/, std::milli>
+    //std::chrono::seconds	duration</*signed integer type of at least 35 bits*/>
+    //std::chrono::minutes	duration</*signed integer type of at least 29 bits*/, std::ratio<60>>
+    //std::chrono::hours	duration</*signed integer type of at least 23 bits*/, std::ratio<3600>>
+    //...
+    std::chrono::seconds interval(20); //instead of std::chrono::duration<int> interval(20);
+
+    // duration 常用的几个成员
+    // count() 表示ticks的个数，rep 表示 tick type， period表示 unit type
+    typedef std::chrono::duration<double, std::ratio<60>> MinType;
+    MinType halfMin(0.5);
+    std::cout << "halfMin count(): " << halfMinute.count() << std::endl;
+    std::cout << "halfMin tick type is double ? " << std::boolalpha << std::is_same<MinType::rep, double>() << std::endl;
+    printf("halfMin unit type: [%ld\\%ld] seconds\n", MinType::period::num, MinType::period::den);
+
+    // arithmetic operations
+    // 要注意两种不同类型的duration相加的时候，对于运算结果的unit type的推断
+    // Due to a provided overloading of common_type<> for durations,
+    // the resulting duration will have a unit that is the greatest common divisor of the units of both operands
+    std::chrono::duration<int, std::ratio<1, 3>> d1(1);
+    std::chrono::duration<int, std::ratio<1, 5>> d2(1);
+    auto d3 = d1 + d2;   // 1/3 和 1/5 的最大共因数 为 1/15, 那么结果的unit type就是 1/15, 8个ticks
+    std::cout<< "d3.count() : " << d3.count() << std::endl;
+
+    std::chrono::seconds twentySeconds(20); // 20 seconds
+    std::chrono::hours aDay(24); // 24 hours
+    std::chrono::milliseconds ms(1); // 0 milliseconds
+    ms += twentySeconds + aDay; // milliseconds + hours, 结果type是milliseconds, 86,401,000 milliseconds
+    --ms;    // 减一个tick: 86,400,000 milliseconds
+    ms *= 2; // 172,840,000 milliseconds
+    std::cout << ms.count() << " ms" << std::endl;
+    std::cout << std::chrono::nanoseconds(ms).count() << " ns" << std::endl;
+
+    // conversions
+    // 对不同的unit type, 向更精细的去转化是隐式转换，没问题，比如秒向毫秒转换
+    std::chrono::seconds s(62);
+    std::chrono::milliseconds millis = s; //OK
+    std::cout << "milliseconds: " << millis.count() << std::endl;
+    // 但向更粗放的类型去转化，就有问题，需要用到显示转换
+    // std::chrono::minutes m = s; //ERROR
+    std::chrono::minutes m = std::chrono::duration_cast<std::chrono::minutes>(s);
+    std::cout << "m.count() = " << m.count() << std::endl;
+
+    // converting a duration with a floating-point tick type also requires an explicit
+    // cast to convert it into an integral duration type
+    std::chrono::duration<double, std::ratio<60>> halfMin2(0.5);
+    //std::chrono::seconds s1 = halfMin2; // ERROR
+    std::chrono::seconds s2 = std::chrono::duration_cast<std::chrono::seconds>(halfMin2); // OK
+}
+
+/*
+ * A clock defines an epoch and a tick period, C++里面常见的epoch是UNIX系统的1970.1.1, tick的单位是一纳秒
+ * clock还有个steady的概念，如果它不是steady的，表示我们可以通过更改系统时间，从而影响这个clock生成出来的time_point
+ * 反之如果是steady的，它内部的时间线就是一直稳定的，一直向前走，我们自己改变不了
+ * C++标准库里面提供了3种clock
+ * 1. system_clock: 最常用的，represents timepoints associated with the usual real-time clock of the current system
+ *           provides to_time_t() and from_time_t() to convert between any timepoint and the C system time type time_t
+ * 2. steady_clock: gives the guarantee that it never gets adjusted,
+ *           timepoint values never decrease as the physical time advances
+ * 3. high_resolution_clock: represents a clock with the shortest tick period possible on the current system.
+ */
+
+template <typename C>
+void printClockData ()
+{
+    using namespace std;
+    cout << "- precision: ";
+// if time unit is less or equal one millisecond
+    typedef typename C::period P; // type of time unit
+    if (ratio_less_equal<P, milli>::value) {
+        // convert to and print as milliseconds
+        typedef typename ratio_multiply<P, kilo>::type TT;
+        cout << fixed << double(TT::num)/TT::den
+             << " milliseconds" << endl;
+    }
+    else {
+        // print as seconds
+        cout << fixed << double(P::num)/P::den << " seconds" << endl;
+    }
+    cout << "- is_steady: " << boolalpha << C::is_steady << endl;
+}
+
+void clock_demo()
+{
+    std::cout << "system_clock: " << std::endl;
+    printClockData<std::chrono::system_clock>();
+    std::cout << "\nhigh_resolution_clock: " << std::endl;
+    printClockData<std::chrono::high_resolution_clock>();
+    std::cout << "\nsteady_clock: " << std::endl;
+    printClockData<std::chrono::steady_clock>();
+}
+
+std::string asString(const std::chrono::system_clock::time_point& tp)
+{
+    // convert to system time:
+    std::time_t t = std::chrono::system_clock::to_time_t(tp);
+
+    // 这里会将时间转化成本地时间，附带着时区的，ctime实际上就是std::asctime(localtime(...))的快捷方式
+    // std::string ts = std::ctime(&t);
+
+    // 如果想使用UTC时间(universal time)
+    std::string ts = std::asctime(gmtime(&t));
+
+    // convert to calendar time
+    ts.resize(ts.size() - 1);
+    // skip trailing newline
+    return ts;
+}
+
+void timepoint_demo()
+{
+    // print the epoch of this system clock:
+    std::chrono::system_clock::time_point tp;
+    std::cout << "epoch: " << asString(tp) << std::endl;
+
+    // print current time:
+    tp = std::chrono::system_clock::now();
+    std::cout << "now: " << asString(tp) << std::endl;
+
+    // print minimum time of this system clock:
+    tp = std::chrono::system_clock::time_point::min();
+    std::cout << "min: " << asString(tp) << std::endl;
+
+    // print maximum time of this system clock:
+    tp = std::chrono::system_clock::time_point::max();
+    std::cout << "max: " << asString(tp) << std::endl;
+}
+
+/*
+ * ctime 是以前C里面的时间处理单元，以下几个方法比较常用
+ * time_t: Type of numeric values representing timepoints, 可用于和现在chrono里面的time_point互相转化
+ * struct tm: Type of “broken down” calendar time, 可以由年月日时分秒来构建
+ * mktime()： Converts a struct tm into a time_t
+ * time()： Yields the current time as numeric value
+ * localtime(), gmtime()： time_t -> struct tm, 区别在于是否使用时区
+ * asctime(): struct tm -> calendar string
+ */
+
+std::chrono::system_clock::time_point makeTimePoint (int year, int mon, int day,
+               int hour, int min, int sec=0)
+{
+    struct std::tm t;
+    t.tm_sec = sec;     // second of minute (0 .. 59 and 60 for leap seconds)
+    t.tm_min = min;     // minute of hour (0 .. 59)
+    t.tm_hour = hour;   // hour of day (0 .. 23)
+    t.tm_mday = day;    // day of month (0 .. 31)
+    t.tm_mon = mon - 1; // month of year (0 .. 11)
+    t.tm_year = year - 1900; // year since 1900
+    t.tm_isdst = -1;    // determine whether daylight saving time
+    std::time_t tt = std::mktime(&t);
+    if (tt == -1) {
+        throw "no valid system time";
+    }
+    return std::chrono::system_clock::from_time_t(tt);
+}
+
+void ctime_demo()
+{
+    auto tp1 = makeTimePoint(2020,01,27,00,00);
+    std::cout << asString(tp1) << std::endl;
+
+    auto tp2 = makeTimePoint(2011,05,23,13,44);
+    std::cout << asString(tp2) << std::endl;
 }
 
 }
