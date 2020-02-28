@@ -9,7 +9,9 @@ namespace stl_basics {
 //     3. Algorithms
 void Run()
 {
-    containers::SequenceContainersDemo();
+    //containers::SequenceContainersDemo();
+    //containers::AssociateContainersDemo();
+    containers::UnorderedContainersDemo();
 }
 
 }

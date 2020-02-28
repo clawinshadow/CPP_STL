@@ -5,6 +5,8 @@ namespace stl_basics {
 namespace containers {
 
 void SequenceContainersDemo();
+void AssociateContainersDemo();
+void UnorderedContainersDemo();
 
 }
 
