@@ -209,5 +209,20 @@ void UnorderedContainersDemo()
 
 }
 
+/*
+ *  Container Adapters: In addition to the fundamental container classes, the C++ standard library provides so-called
+    container adapters, which are predefined containers that provide a restricted interface to meet special
+    needs. These container adapters are implemented by using the fundamental container classes. The
+    predefined container adapters are as follows:
+        • A stack (the name says it all) manages its elements by the LIFO (last-in-first-out) policy.
+        • A queue manages its elements by the FIFO (first-in-first-out) policy. That is, it is an ordinary
+            buffer.
+        • A priority queue is a container in which the elements may have different priorities. The priority
+            is based on a sorting criterion that the programmer may provide (by default, operator < is used).
+            A priority queue is, in effect, a buffer in which the next element is always one having the highest
+            priority inside the queue. If more than one element has the highest priority, the order of these
+            elements is undefined.
+ */
+
 }
 }

@@ -8,7 +8,9 @@ project(stl_demo VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-add_executable(stl_demo main.cpp 
+include_directories(helper)
+
+add_executable(stl_demo main.cpp helper/helper.h
     cpp_11/new_features.cpp
     cpp_11/move_semantics.cpp
     cpp_11/exceptions.cpp
@@ -19,7 +21,9 @@ add_executable(stl_demo main.cpp
     utility/type_trait.cpp
     utility/auxiliary_functions.cc
     standard_template_library/stl_basics.cc
-    standard_template_library/containers.cc)
+    standard_template_library/containers.cc
+    standard_template_library/iterators.cpp
+    standard_template_library/algorithms.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

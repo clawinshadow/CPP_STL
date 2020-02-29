@@ -1,5 +1,7 @@
 #include "stl_basics.h"
 #include "containers.h"
+#include "iterators.h"
+#include "algorithms.h"
 
 namespace stl_basics {
 
@@ -11,7 +13,12 @@ void Run()
 {
     //containers::SequenceContainersDemo();
     //containers::AssociateContainersDemo();
-    containers::UnorderedContainersDemo();
+    //containers::UnorderedContainersDemo();
+    //iterators::Demo();
+    //iterators::IteratorAdaptersDemo();
+    //algorithms::Demo();
+    //algorithms::RangeDemo();
+    algorithms::RemovingDemo();
 }
 
 }
