@@ -2,6 +2,7 @@
 #include "containers.h"
 #include "iterators.h"
 #include "algorithms.h"
+#include "func_arguments.h"
 
 namespace stl_basics {
 
@@ -18,7 +19,9 @@ void Run()
     //iterators::IteratorAdaptersDemo();
     //algorithms::Demo();
     //algorithms::RangeDemo();
-    algorithms::RemovingDemo();
+    //algorithms::RemovingDemo();
+    func_arguments::Demo();
+    func_arguments::PredicatesDemo();
 }
 
 }

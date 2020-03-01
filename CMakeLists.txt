@@ -23,7 +23,8 @@ add_executable(stl_demo main.cpp helper/helper.h
     standard_template_library/stl_basics.cc
     standard_template_library/containers.cc
     standard_template_library/iterators.cpp
-    standard_template_library/algorithms.cpp)
+    standard_template_library/algorithms.cpp
+    standard_template_library/func_arguments.cc)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
