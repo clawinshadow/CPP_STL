@@ -224,5 +224,35 @@ void UnorderedContainersDemo()
             elements is undefined.
  */
 
+/*
+  - Requirements for Container Elements：
+    所有的STL容器里面的元素都必须满足以下三个要求：
+    1. An element must be copyable or movable. 
+       Thus, an element type implicitly or explicitly has to provide a copy or move constructor.
+    2. An element must be (move) assignable by the assignment operator. 
+       Containers and algorithms use assignment operators to overwrite old elements with new elements.
+    3. An element must be destroyable by a destructor. 
+       Containers destroy their internal copies of elements when these elements are removed from the container. 
+       Thus, the destructor must not be private. 
+       Also, as usual in C++, a destructor must not throw;
+    这三个要求对所有class来说都是默认满足的，只要我们不特意在类的成员里面禁用掉他们就可以
+    有些特定的容器可能还对元素有额外的要求：
+    1. For some member functions of sequence containers, the default constructor must be available
+       比如调用resize()方法，或者初始化多个空的元素时，需要有个默认的constructor
+    2. For several operations, the test of equality with operator == must be defined 
+       and is especially needed when elements are searched. 常见的比如在unordered containers中
+    3. For associative containers, the operations of the sorting criterion must be provided by the elements.
+    4. For unordered containers, a hash function and an equivalence criterion must be provided for the elements
+
+  - Value Semantics or Reference Semantics
+    Usually, all containers create internal copies of their elements and return copies of those elements.
+    Copying values means that the STL containers provide value semantics
+    意味着我们添加进容器里面的元素，通常都是一份copy。
+    如果我们非要添加引用，虽然这种方式很容易造成错误，但是它性能好，可以按以下几种方法：
+    1. 使用smart pointers作为元素，容器中保存的是指向原对象的每个指针
+    2. 使用std::reference_wrapper<>，比如 std::ref 之类的
+
+ */
+
 }
 }
