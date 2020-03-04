@@ -26,7 +26,8 @@ add_executable(stl_demo main.cpp helper/helper.h
     standard_template_library/algorithms.cpp
     standard_template_library/func_arguments.cc
     containers/demos.cpp
-    containers/arrays.cpp)
+    containers/arrays.cpp
+    containers/vectors.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

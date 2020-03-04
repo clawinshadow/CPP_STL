@@ -1,5 +1,6 @@
 #include "demos.h"
 #include "arrays.h"
+#include "vectors.h"
 
 #include <iostream>
 
@@ -9,7 +10,8 @@ void Demos()
 {
     std::cout << "containers demos run \n";
 
-    arrays::Run();
+    //arrays::Run();
+    vectors::Run();
 }
 
 }
