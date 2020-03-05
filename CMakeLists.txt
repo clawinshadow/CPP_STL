@@ -27,7 +27,10 @@ add_executable(stl_demo main.cpp helper/helper.h
     standard_template_library/func_arguments.cc
     containers/demos.cpp
     containers/arrays.cpp
-    containers/vectors.cpp)
+    containers/vectors.cpp
+    containers/deques.cpp
+    containers/lists.cpp
+    containers/forward_lists.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
