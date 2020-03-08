@@ -5,6 +5,7 @@ namespace containers {
 namespace sets {
 
 void Run();
+void SpecialSearchOperationsDemo();
 
 }
 }

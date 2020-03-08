@@ -5,6 +5,7 @@
 #include "lists.h"
 #include "forward_lists.h"
 #include "common.h"
+#include "sets.h"
 
 #include <iostream>
 
@@ -19,8 +20,8 @@ void Demos()
     //vectors::Run();
     //deques::Run();
     //lists::Run();
-    forward_lists::Run();
-    
+    //forward_lists::Run();
+    sets::Run();
 }
 
 }
