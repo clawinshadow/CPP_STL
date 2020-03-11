@@ -32,7 +32,8 @@ add_executable(stl_demo main.cpp helper/helper.h
     containers/lists.cpp
     containers/forward_lists.cpp
     containers/common.cc
-    containers/sets.cc)
+    containers/sets.cc
+    containers/maps.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
