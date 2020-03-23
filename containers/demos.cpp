@@ -27,7 +27,9 @@ void Demos()
     //maps::Run();
     //maps::RunEx();
     //others::StringsDemo();
-    others::C_Arrays_Demo();
+    //others::C_Arrays_Demo();
+    others::Reference_Semantics();
+    others::Reference_Wrapper();
 }
 
 }
