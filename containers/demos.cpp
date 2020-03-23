@@ -7,6 +7,7 @@
 #include "common.h"
 #include "sets.h"
 #include "maps.h"
+#include "others.h"
 
 #include <iostream>
 
@@ -23,8 +24,10 @@ void Demos()
     //lists::Run();
     //forward_lists::Run();
     //sets::Run();
-    maps::Run();
-    maps::RunEx();
+    //maps::Run();
+    //maps::RunEx();
+    //others::StringsDemo();
+    others::C_Arrays_Demo();
 }
 
 }
