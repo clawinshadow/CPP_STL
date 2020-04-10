@@ -3,6 +3,8 @@
 #include "utility/utility_demos.h"
 #include "standard_template_library/stl_basics.h"
 #include "containers/demos.h"
+#include "container_members/demos.h"
+#include "iterators/demos.h"
 
 int main()
 {
@@ -10,7 +12,9 @@ int main()
     //cpp_11::Run();
     //utility::demos::Run();
     //stl_basics::Run();
-    containers::Demos();
+    //containers::Demos();
+    //container_members::Demos();
+    iterators::Run();
 
     return 0;
 }
