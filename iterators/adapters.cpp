@@ -234,6 +234,16 @@ void Insert_Iterators()
     general_inserter_demo();
 }
 
+void Stream_Iterators()
+{
+    /*
+     * A stream iterator is an iterator adapter that allows you to use a stream as a source or destination of
+       algorithms.
+       In particular, an istream iterator can be used to read elements from an input stream, and
+       an ostream iterator can be used to write values to an output stream.
+     */
+}
+
 void Demos()
 {
     Reverse_Iterators();

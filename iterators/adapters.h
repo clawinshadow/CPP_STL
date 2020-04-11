@@ -6,6 +6,7 @@ namespace adapters {
 
 void Reverse_Iterators();
 void Insert_Iterators();
+void Stream_Iterators();
 
 void Demos();
 
