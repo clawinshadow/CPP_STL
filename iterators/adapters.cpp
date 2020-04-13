@@ -234,6 +234,77 @@ void Insert_Iterators()
     general_inserter_demo();
 }
 
+void ostream_iterator_demo()
+{
+    /*
+     * Ostream iterators write assigned values to an output stream.
+     * By using ostream iterators, algorithms can write directly to streams.
+     * The implementation of an ostream iterator uses the same concept as the implementation of insert iterators.
+     * The only difference is that they transform the assignment of a new value into an output operation by using operator <<
+     *
+     *  Expression                              Effect
+        ostream_iterator<T>(ostream)            Creates an ostream iterator for ostream
+        ostream_iterator<T>(ostream,delim)      Creates an ostream iterator for ostream, with the
+                                                string delim as the delimiter between the values,
+                                                (note that delim has type const char*)
+        *iter                                   No-op (returns iter)
+        iter = value                            Writes value to ostream: ostream<<value (followed by delim, if set)
+        ++iter                                  No-op (returns iter)
+        iter++                                  No-op (returns iter)
+     */
+    ostream_iterator<int> os(cout, "\n");
+
+    // native way
+    *os = 42;
+    ++os;
+    *os = 77;
+    ++os;
+    os = -5;
+    ++os;
+
+    // convenient way
+    vector<int> coll = {1, 2, 3, 4, 5, 6};
+    copy(coll.begin(), coll.end(), ostream_iterator<int>(cout));
+
+    cout << endl;
+
+    copy(coll.begin(), coll.end(), ostream_iterator<int>(cout, "<"));
+    cout <<endl;
+}
+
+void istream_iterator_demo()
+{
+    /*
+     *  Expression                      Effect
+        istream_iterator<T>()           Creates an end-of-stream iterator
+        istream_iterator<T>(istream)    Creates an istream iterator for istream (and might read the first value)
+        *iter                           Returns the value, read before (reads first value if not done by the constructor)
+        iter->member                    Returns a member, if any, of the actual value, read before
+        ++iter                          Reads next value and returns its position
+        iter++                          Reads next value but returns an iterator for the previous value
+        iter1== iter2                   Tests iter1 and iter2 for equality
+        iter1!= iter2                   Tests iter1 and iter2 for inequality
+
+        就是要注意下默认的构造函数是创建一个end-of-stream iterator
+     */
+
+    // create istream iterator that reads integers from cin
+    istream_iterator<int> intReader(cin);
+
+    // create end-of-stream iterator
+    istream_iterator<int> intReaderEOF;
+
+    // while able to read tokens with istream iterator
+    // - write them twice
+    while (intReader != intReaderEOF) {
+        cout << "once: " << *intReader << endl;
+        cout << "once again: " << *intReader << endl;
+        ++intReader;
+    }
+
+    //比如输入 1,2,3,f,4 输入到f时因为不再是int类型的输入，就会结束循环
+}
+
 void Stream_Iterators()
 {
     /*
@@ -242,12 +313,25 @@ void Stream_Iterators()
        In particular, an istream iterator can be used to read elements from an input stream, and
        an ostream iterator can be used to write values to an output stream.
      */
+    ostream_iterator_demo();
+    //istream_iterator_demo();
 }
 
 void Demos()
 {
     Reverse_Iterators();
     Insert_Iterators();
+    Stream_Iterators();
+
+    /*
+     * Move Iterators:
+     *  std::list<std::string> s;
+        ...
+        std::vector<string> v1(s.begin(), s.end());            // copy strings into v1
+        std::vector<string> v2( make_move_iterator(s.begin()),
+                                make_move_iterator(s.end()) ); // move strings into v2
+        不是很实用
+     */
 }
 
 }
