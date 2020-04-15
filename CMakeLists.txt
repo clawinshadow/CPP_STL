@@ -39,7 +39,11 @@ add_executable(stl_demo main.cpp helper/helper.h
     iterators/demos.cpp
     iterators/categories.cpp
     iterators/auxiliary.cpp
-    iterators/adapters.cpp)
+    iterators/adapters.cpp
+    function_objects/demos.cpp
+    function_objects/basics.cpp
+    function_objects/binders.cpp
+    function_objects/lambdas.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

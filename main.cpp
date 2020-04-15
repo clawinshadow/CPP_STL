@@ -5,6 +5,7 @@
 #include "containers/demos.h"
 #include "container_members/demos.h"
 #include "iterators/demos.h"
+#include "function_objects/demos.h"
 
 int main()
 {
@@ -14,7 +15,8 @@ int main()
     //stl_basics::Run();
     //containers::Demos();
     //container_members::Demos();
-    iterators::Run();
+    //iterators::Run();
+    function_objects::Demos();
 
     return 0;
 }
