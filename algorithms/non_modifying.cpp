@@ -1,6 +1,9 @@
 #include "non_modifying.h"
 #include "helper.h"
 
+#include <iostream>
+#include <string>
+
 using namespace std;
 
 namespace algorithms {
@@ -523,10 +526,273 @@ void range_test_equality_unordered()
     }
 }
 
+void range_mismatch()
+{
+    /*
+     * Search the First Difference 检测两个队列中，从哪个元素开始不一样的
+     * pair<InputIterator1,InputIterator2>
+       mismatch (InputIterator1 beg, InputIterator1 end,
+                 InputIterator2 cmpBeg)
+
+       pair<InputIterator1,InputIterator2>
+       mismatch (InputIterator1 beg, InputIterator1 end,
+                 InputIterator2 cmpBeg,
+                 BinaryPredicate op)
+       返回的pair中，分别标识了两个队列中的位置
+       ......
+       If no difference is found, a pair<> of end and the corresponding element of the second range
+       is returned. Note that this does not mean that both sequences are equal, because the second
+       sequence might contain more elements.
+
+       To check whether two ranges are equal, you should use algorithm equal()
+     */
+    vector<int> coll1 = { 1, 2, 3, 4, 5, 6 };
+    list<int>   coll2 = { 1, 2, 4, 8, 16, 3 };
+
+    helper::PRINT_ELEMENT(coll1,"coll1: ");
+    helper::PRINT_ELEMENT(coll2,"coll2: ");
+
+    auto values = mismatch(coll1.cbegin(), coll1.cend(), coll2.cbegin());
+    if (values.first == coll1.end())
+    {
+        cout << "no mismatch found.." << endl;
+    } else {
+        cout << "first mismatch: "
+             << *values.first << " and "
+             << *values.second << endl;
+    }
+
+    // find first position where the element of coll1 is not
+    // less than the corresponding element of coll2
+    values = mismatch (coll1.cbegin(), coll1.cend(),
+                       coll2.cbegin(),
+                       less_equal<int>());
+    if (values.first == coll1.end()) {
+        cout << "always less-or-equal" << endl;
+    }
+    else {
+        cout << "not less-or-equal: "
+             << *values.first << " and "
+             << *values.second << endl;
+    }
+}
+
+void range_lexico_compare()
+{
+    /*
+     * Testing for “Less Than”
+        bool
+        lexicographical_compare(InputIterator1 beg1, InputIterator1 end1,
+                InputIterator2 beg2, InputIterator2 end2)
+        bool
+        lexicographical_compare(InputIterator1 beg1, InputIterator1 end1,
+                InputIterator2 beg2, InputIterator2 end2,
+                CompFunc op)
+
+        • Both forms return whether the elements in the range [beg1,end1) are “lexicographically less
+          than” the elements in the range [beg2,end2).
+        • The first form compares the elements by using operator <.
+        • The second form compares the elements by using the binary predicate
+            op(elem1,elem2)
+          which should return true when elem1 is less than elem2.
+        • Lexicographical comparison means that sequences are compared element-by-element until any
+          of the following occurs:
+            – When two elements are not equal, the result of their comparison is the result of the whole
+              comparison.
+            – When one sequence has no more elements, the sequence that has no more elements is less
+              than the other. Thus, the comparison yields true if the first sequence is the one that has no
+              more elements.
+            – When both sequences have no more elements, both sequences are equal, and the result of the
+              comparison is false.
+            从队列开始，逐个逐个的比较元素，一旦发现队列1有元素小于队列2，就返回true，如果队列1遍历完了，而此时队列2还有元素，
+            也返回true，如果此时队列2也没元素了，那就是false
+     */
+    list<int> c1, c2, c3, c4;
+    helper::INSERT_ELEMENTS(c1, 1, 5);
+    c4 = c3 = c2 = c1;
+
+    c2.push_back(2);
+    c3.push_back(7);
+    helper::PRINT_ELEMENT(c1, "c1: ");
+    helper::PRINT_ELEMENT(c2, "c2: ");
+    helper::PRINT_ELEMENT(c3, "c3: ");
+    helper::PRINT_ELEMENT(c4, "c4: ");
+
+    cout << boolalpha << "c1 vs c2: "
+         << lexicographical_compare(c1.begin(), c1.end(), c2.begin(), c2.end()) << endl;
+    cout << boolalpha << "c2 vs c3: "
+         << lexicographical_compare(c2.begin(), c2.end(), c3.begin(), c3.end()) << endl;
+    cout << boolalpha << "c1 vs c4: "
+         << lexicographical_compare(c1.begin(), c1.end(), c4.begin(), c4.end()) << endl;
+}
+
 void compare_ranges_demos()
 {
     range_test_equality();
     range_test_equality_unordered();
+    range_mismatch();
+    range_lexico_compare();
+}
+
+void check_for_sorting()
+{
+    /* bool
+       is_sorted (ForwardIterator beg, ForwardIterator end)
+       bool
+       is_sorted (ForwardIterator beg, ForwardIterator end, BinaryPredicate op)
+
+       ForwardIterator
+       is_sorted_until (ForwardIterator beg, ForwardIterator end)
+       ForwardIterator
+       is_sorted_until (ForwardIterator beg, ForwardIterator end, BinaryPredicate op)
+
+       • is_sorted() returns whether the elements in the range [beg,end) are sorted.
+       • is_sorted()_until returns the position of the first element in the range [beg,end), which
+         breaks the sorting of this range, or end if none.
+       • If the range is empty or has only one element, the algorithms return true or end, respectively.
+       • Complexity: linear
+    */
+    vector<int> coll = {1, 1, 3, 4, 5, 7, 9};
+    helper::PRINT_ELEMENT(coll, "coll: ");
+
+    bool sorted = is_sorted(coll.cbegin(), coll.cend());
+    std::cout << boolalpha << "coll is sorted: " << sorted << endl;
+
+    map<int, string> dict = { {1,"Bill"}, {2,"Jim"}, {3,"Nico"}, {4,"Liu"}, {5,"Ai"} };
+    helper::PRINT_MAPPED_ELEMENTS(dict, "dict: ");
+
+    auto compare = [](const pair<int, string> &_p1,
+                      const pair<int, string> &_p2) -> bool {
+        return _p1.second < _p2.second;
+    };
+    bool dict_sorted = is_sorted(dict.cbegin(), dict.cend(), compare);
+    cout << boolalpha << "dict is sorted: " << dict_sorted << endl;
+
+    auto pos = is_sorted_until(dict.cbegin(), dict.cend(), compare);
+    if (pos != dict.end())
+    {
+        cout << "dict is sorted until: " << pos->second << endl;
+    }
+}
+
+void check_for_partition()
+{
+    /*
+     *  bool
+        is_partitioned (InputIterator beg, InputIterator end, UnaryPredicate op)
+
+        ForwardIterator
+        partition_point (ForwardIterator beg, ForwardIterator end, BinaryPredicate op)
+        顾名思义，这个是检测队列是否是一团一团的聚集的，从头开始遍历，op返回true的是一团，之后的元素应该都是返回false的
+        • is_partitioned() returns whether the elements in the range [beg,end) are partitions, so all the
+          elements fulfilling the predicate op() are positioned before all elements that do not fulfill it.
+        • partition_point() returns the position of the first element in the partitioned range [beg,end).
+          Thus, for [beg,end), is_partitioned() has to yield true on entry.
+     */
+    auto isOdd = [](int elem) -> bool {
+        return elem % 2 == 1;
+    };
+    vector<int> coll = { 5, 3, 9, 1, 3, 4, 8, 2, 6 };
+    helper::PRINT_ELEMENT(coll, "coll: ");
+
+    // 5, 3, 9, 1, 3 都是奇数，isOdd返回为true, 后面的 4,8,2,6 都是偶数，所以这个是 partitioned
+    bool is_p = is_partitioned(coll.cbegin(), coll.cend(), isOdd);
+    cout << "coll is partitioned: " << boolalpha << is_p << endl;
+
+    if (is_p)
+    {
+        auto pos = partition_point(coll.cbegin(), coll.cend(), isOdd); //所以这里不用非得是 binary predicate
+        cout << "partition point: " << *pos <<endl;
+    }
+
+    vector<int> coll2 = {2, 4, 1, 3};  // 前面一堆是false，后面一堆是true，是不行的
+    helper::PRINT_ELEMENT(coll2, "coll2: ");
+
+    bool is_p_2 = is_partitioned(coll2.cbegin(), coll2.cend(), isOdd);
+    cout << "coll2 is partitioned: " << boolalpha << is_p_2 << endl;
+}
+
+void check_for_heap()
+{
+    /*
+     *  bool
+        is_heap (RandomAccessIterator beg, RandomAccessIterator end)
+        bool
+        is_heap (RandomAccessIterator beg, RandomAccessIterator end, BinaryPredicate op)
+                 RandomAccessIterator
+
+        is_heap_until (RandomAccessIterator beg, RandomAccessIterator end)
+                       RandomAccessIterator
+        is_heap_until (RandomAccessIterator beg, RandomAccessIterator end,
+                       BinaryPredicate op)
+
+        • is_heap() returns whether the elements in the range [beg,end) are a heap (详见 sorting algorithms),
+          which means that beg is (one of) the maximum element(s).
+        • is_heap()_until returns the position of the first element in the range [beg,end) that breaks the
+          sorting as a heap (is larger than the first element) or end if none.
+        • The first and third forms use operator < to compare elements. The second and fourth forms use
+          the binary predicate
+            op(elem1,elem2)
+          which should return true if elem1 is “less than” elem2.
+     */
+    vector<int> coll1 = { 9, 8, 7, 7, 7, 5, 4, 2, 1 };
+    vector<int> coll2 = { 5, 3, 2, 1, 4, 7, 9, 8, 6 };
+    helper::PRINT_ELEMENT(coll1, "coll1: ");
+    helper::PRINT_ELEMENT(coll2, "coll2: ");
+
+    cout << boolalpha << "coll1 is heap: "
+         << is_heap(coll1.cbegin(), coll1.cend()) << endl;
+    cout << boolalpha << "coll2 is heap: "
+         << is_heap(coll2.cbegin(), coll2.cend()) << endl;
+
+    // print the first element that is not a heap in coll2
+    auto pos = is_heap_until (coll2.cbegin(), coll2.cend());
+    if (pos != coll2.end()) {
+        cout << "first non-heap element: " << *pos << endl;
+    }
+}
+
+void check_for_all_any_none()
+{
+    /*
+     *  bool
+        all_of (InputIterator beg, InputIterator end, UnaryPredicate op)
+
+        bool
+        any_of (InputIterator beg, InputIterator end, UnaryPredicate op)
+
+        bool
+        none_of (InputIterator beg, InputIterator end, UnaryPredicate op)
+
+        • These algorithms return whether for all, any (at least one), or none of the elements in the range
+          [beg,end), the unary predicate
+            op(elem)
+          yields true.
+        • If the range is empty, all_of() and none_of() return true, whereas any_of() returns false.
+     */
+    vector<int> coll;
+    helper::INSERT_ELEMENTS(coll, 1, 9);
+    helper::PRINT_ELEMENT(coll, "coll: ");
+    // define an object for the predicate (using a lambda)
+    auto isEven = [](int elem) -> bool {
+        return elem%2==0;
+    };
+
+    // print whether all, any, or none of the elements are/is even
+    cout << boolalpha << "all even?: "
+         << all_of(coll.cbegin(), coll.cend(), isEven) << endl;
+    cout << "any even?: "
+         << any_of(coll.cbegin(), coll.cend(), isEven) << endl;
+    cout << "none even?: "
+         << none_of(coll.cbegin(), coll.cend(), isEven) << endl;
+}
+
+void predicates_for_ranges()
+{
+    check_for_sorting();
+    check_for_partition();
+    check_for_heap();
+    check_for_all_any_none();
 }
 
 void Run()
@@ -535,6 +801,7 @@ void Run()
     min_max_demo();
     search_demos();
     compare_ranges_demos();
+    predicates_for_ranges();
 }
 
 }
