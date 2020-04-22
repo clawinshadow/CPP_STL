@@ -1,6 +1,9 @@
 #include "demos.h"
 #include "for_each.h"
 #include "non_modifying.h"
+#include "modifying.h"
+#include "removing.h"
+#include "mutating.h"
 
 #include <iostream>
 
@@ -42,7 +45,10 @@ void Demos()
     std::cout << "Algorithms Demos .. " << std::endl;
 
     //for_each_::Run();
-    non_modifying::Run();
+    //non_modifying::Run();
+    //modifying::Run();
+    //removing::Run();
+    mutating::Run();
 }
 
 }

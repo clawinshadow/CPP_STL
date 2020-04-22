@@ -46,7 +46,10 @@ add_executable(stl_demo main.cpp helper/helper.h
     function_objects/lambdas.cpp
     algorithms/demos.cpp
     algorithms/for_each.cpp
-    algorithms/non_modifying.cpp)
+    algorithms/non_modifying.cpp
+    algorithms/modifying.cpp
+    algorithms/removing.cpp
+    algorithms/mutating.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
