@@ -4,6 +4,8 @@
 #include "modifying.h"
 #include "removing.h"
 #include "mutating.h"
+#include "sorting.h"
+#include "sorted_range.h"
 
 #include <iostream>
 
@@ -48,7 +50,9 @@ void Demos()
     //non_modifying::Run();
     //modifying::Run();
     //removing::Run();
-    mutating::Run();
+    //mutating::Run();
+    //sorting::Run();
+    sorted_range::Run();
 }
 
 }

@@ -49,7 +49,8 @@ add_executable(stl_demo main.cpp helper/helper.h
     algorithms/non_modifying.cpp
     algorithms/modifying.cpp
     algorithms/removing.cpp
-    algorithms/mutating.cpp)
+    algorithms/mutating.cpp
+    algorithms/sorting.cpp algorithms/sorted_range.cpp algorithms/sorted_range.h)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
