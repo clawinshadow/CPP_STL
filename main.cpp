@@ -7,6 +7,7 @@
 #include "iterators/demos.h"
 #include "function_objects/demos.h"
 #include "algorithms/demos.h"
+#include "special_containers/demos.h"
 
 int main()
 {
@@ -18,7 +19,8 @@ int main()
     //container_members::Demos();
     //iterators::Run();
     //function_objects::Demos();
-    algorithms::Demos();
+    //algorithms::Demos();
+    special_containers::Demos();
 
     return 0;
 }

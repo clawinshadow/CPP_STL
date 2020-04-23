@@ -6,6 +6,7 @@
 #include "mutating.h"
 #include "sorting.h"
 #include "sorted_range.h"
+#include "numerics.h"
 
 #include <iostream>
 
@@ -52,7 +53,8 @@ void Demos()
     //removing::Run();
     //mutating::Run();
     //sorting::Run();
-    sorted_range::Run();
+    //sorted_range::Run();
+    numerics_::Run();
 }
 
 }
