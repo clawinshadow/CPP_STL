@@ -1,5 +1,8 @@
 #include "demos.h"
 #include "stacks.h"
+#include "queues.h"
+#include "priority_queues.h"
+#include "bitsets_.h"
 
 #include <iostream>
 
@@ -21,6 +24,9 @@ void Demos()
     cout << "Special containers demos.. " << endl;
 
     stacks::Run();
+    queues::Run();
+    priority_queues::Run();
+    bitsets_::Run();
 }
 
 }
