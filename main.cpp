@@ -8,6 +8,7 @@
 #include "function_objects/demos.h"
 #include "algorithms/demos.h"
 #include "special_containers/demos.h"
+#include "strings/demos.h"
 
 int main()
 {
@@ -20,7 +21,8 @@ int main()
     //iterators::Run();
     //function_objects::Demos();
     //algorithms::Demos();
-    special_containers::Demos();
+    //special_containers::Demos();
+    strings::Demos();
 
     return 0;
 }

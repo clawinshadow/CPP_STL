@@ -55,7 +55,10 @@ add_executable(stl_demo main.cpp helper/helper.h
     algorithms/numerics.cpp
     special_containers/demos.cpp
     special_containers/stacks.cpp
-    special_containers/queues.cpp special_containers/priority_queues.cpp special_containers/priority_queues.h special_containers/bitsets_.cpp special_containers/bitsets_.h)
+    special_containers/queues.cpp
+    special_containers/priority_queues.cpp
+    special_containers/bitsets_.cpp
+    strings/demos.cpp strings/details.cpp strings/details.h)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
