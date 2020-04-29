@@ -1,0 +1,10 @@
+#ifndef STL_DEMO_REGULAR_EXPRESSIONS_DEMOS_H
+#define STL_DEMO_REGULAR_EXPRESSIONS_DEMOS_H
+
+namespace regex {
+
+void Demos();
+
+}
+
+#endif //STL_DEMO_REGULAR_EXPRESSIONS_DEMOS_H

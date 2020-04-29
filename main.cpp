@@ -9,6 +9,7 @@
 #include "algorithms/demos.h"
 #include "special_containers/demos.h"
 #include "strings/demos.h"
+#include "regular_expressions/demos.h"
 
 int main()
 {
@@ -22,7 +23,8 @@ int main()
     //function_objects::Demos();
     //algorithms::Demos();
     //special_containers::Demos();
-    strings::Demos();
+    //strings::Demos();
+    regex::Demos();
 
     return 0;
 }

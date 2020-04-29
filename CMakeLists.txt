@@ -58,7 +58,9 @@ add_executable(stl_demo main.cpp helper/helper.h
     special_containers/queues.cpp
     special_containers/priority_queues.cpp
     special_containers/bitsets_.cpp
-    strings/demos.cpp strings/details.cpp strings/details.h)
+    strings/demos.cpp
+    strings/details.cpp
+    regular_expressions/demos.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
