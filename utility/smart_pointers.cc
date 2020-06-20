@@ -73,6 +73,7 @@ void shared_ptr_demo()
     }
 
     *pNico = "Huang Fan";
+    //pNico.reset(new string("Huang Fan"));
 
     std::cout << "-------------" << std::endl;
 
@@ -86,8 +87,19 @@ void shared_ptr_demo()
     std::cout << "use count of pNico: " << persons[0].use_count() << std::endl;
 
     // use reset() to assign a new pointer to shared_ptr
+    // 注意这里pNico reset了之后，不影响前面persons中已经添加了的pNico，它们还是指向旧的字符串"Huang Fan"
+    // "Huang Fan"的引用计数也还是3，所以 pNico.reset() 不更改内部指针指向的对象的值，它跟 *pNico = xxx 是不一样的
     pNico.reset(new std::string("Nico Again"));
     std::cout << "pNico: " << *pNico << std::endl;
+    persons.push_back(pNico);
+    persons.push_back(pNico);
+
+    for (auto ptr: persons)
+    {
+        std::cout << *ptr << std::endl;
+    }
+    std::cout << "use count of old pNico: " << persons[0].use_count() << std::endl;
+    std::cout << "use count of new pNico: " << persons.back().use_count() << std::endl;
 
     // define our own deleter, which will be called when the use_count become zero
     std::shared_ptr<std::string> pNico5(new std::string("Nico 5"),

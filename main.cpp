@@ -15,7 +15,7 @@ int main()
 {
     // std::cout << "Hello, World." << std::endl;
     //cpp_11::Run();
-    //utility::demos::Run();
+    utility::demos::Run();
     //stl_basics::Run();
     //containers::Demos();
     //container_members::Demos();
@@ -24,7 +24,7 @@ int main()
     //algorithms::Demos();
     //special_containers::Demos();
     //strings::Demos();
-    regex::Demos();
+    //regex::Demos();
 
     return 0;
 }
