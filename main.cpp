@@ -10,12 +10,13 @@
 #include "special_containers/demos.h"
 #include "strings/demos.h"
 #include "regular_expressions/demos.h"
+#include "stream/demos.h"
 
 int main()
 {
     // std::cout << "Hello, World." << std::endl;
     //cpp_11::Run();
-    utility::demos::Run();
+    //utility::demos::Run();
     //stl_basics::Run();
     //containers::Demos();
     //container_members::Demos();
@@ -25,6 +26,7 @@ int main()
     //special_containers::Demos();
     //strings::Demos();
     //regex::Demos();
+    stream::Demos();
 
     return 0;
 }

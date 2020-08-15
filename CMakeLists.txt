@@ -60,7 +60,8 @@ add_executable(stl_demo main.cpp helper/helper.h
     special_containers/bitsets_.cpp
     strings/demos.cpp
     strings/details.cpp
-    regular_expressions/demos.cpp)
+    regular_expressions/demos.cpp
+    stream/demos.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
